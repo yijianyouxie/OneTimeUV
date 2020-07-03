@@ -1,5 +1,9 @@
 Shader "TLStudio/Effect/Additive_UVFlow" {
     Properties {
+		[Header(Tips begain)]
+		[Header(Add UVController Componet to use.)]
+		[Header(Tips end)]
+		[Space(20)]
         _MainTex ("MainTex", 2D) = "white" {}
         _MaskTex ("MaskTex", 2D) = "white" {}
         _AlphaAdjust ("AlphaAdjust", float ) = 3
