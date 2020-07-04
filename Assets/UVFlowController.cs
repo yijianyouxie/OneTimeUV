@@ -13,6 +13,8 @@ public class UVFlowController : VisiableUpdateHandler {
     //public float _duration = 1f;
     public bool mainUV_FlowOnce = true;
     public Vector2 mainUV_FromTo = new Vector2(-1f, 0f);
+    [Header("曲线的x轴是时间轴，可以定义持续时间。y轴是百分比")]
+    public AnimationCurve mainUV_Curve;
     public Vector2 mainUV_ScrollSpeed = new Vector2(0f, 0f);
 
     [Header("====相乘贴图的UV变化速度。====")]
@@ -55,19 +57,12 @@ public class UVFlowController : VisiableUpdateHandler {
         var offsetY = 0f;
 
         //主贴图=======================================
+        float ratio = mainUV_Curve.Evaluate(elapseTime);
         if (mainUV_FlowOnce)
         {
-            bool lowToHigh = mainUV_FromTo.x <= mainUV_FromTo.y;
-            offsetX = elapseTime * mainUV_ScrollSpeed.x + mainUV_FromTo.x * (mainUV_ScrollSpeed.x != 0f ? 1f : 0f);
-            if ((lowToHigh && offsetX >= mainUV_FromTo.y) || (!lowToHigh && offsetX <= mainUV_FromTo.y))
-            {
-                offsetX = mainUV_FromTo.y;
-            }
-            offsetY = elapseTime * mainUV_ScrollSpeed.y + mainUV_FromTo.x * (mainUV_ScrollSpeed.y != 0f ? 1f : 0f);
-            if ((lowToHigh && offsetY >= mainUV_FromTo.y) || (!lowToHigh && offsetY <= mainUV_FromTo.y))
-            {
-                offsetY = mainUV_FromTo.y;
-            }
+            float currValue = Mathf.Lerp(mainUV_FromTo.x, mainUV_FromTo.y, ratio);
+            offsetX = (mainUV_ScrollSpeed.x != 0f ? currValue : 0f);
+            offsetY = (mainUV_ScrollSpeed.y != 0f ? currValue : 0f);
         }
         else
         {
