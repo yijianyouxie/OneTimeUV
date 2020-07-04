@@ -19,9 +19,9 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 095ae04bbbebd9844bf2b5f0165abfe8, type: 3}
+          m_Texture: {fileID: 2800000, guid: 924d0eaa6fc1769428f20ff51106496b, type: 3}
           m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 1, y: 0}
+          m_Offset: {x: -0.09, y: 0}
       data:
         first:
           name: _BumpMap
@@ -40,7 +40,7 @@ Material:
         first:
           name: _MaskTex
         second:
-          m_Texture: {fileID: 2800000, guid: 6f7484c61948b5b439b38619f8567334, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -89,21 +89,21 @@ Material:
         first:
           name: _GlossTex
         second:
-          m_Texture: {fileID: 2800000, guid: 09a9c61c1d92000438afeba0f308fd41, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 1, y: 0}
+          m_Offset: {x: 0.47, y: 0}
       data:
         first:
           name: _AdjustTex
         second:
-          m_Texture: {fileID: 2800000, guid: 4fb10709f0edef647995608c845ba0bf, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 1, y: 0}
+          m_Offset: {x: -0.25, y: 0}
       data:
         first:
           name: _DissoveTex
         second:
-          m_Texture: {fileID: 2800000, guid: 924d0eaa6fc1769428f20ff51106496b, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:

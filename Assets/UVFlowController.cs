@@ -15,7 +15,7 @@ public class UVFlowController : VisiableUpdateHandler {
     public Vector2 mainUV_FromTo = new Vector2(-1f, 0f);
     public Vector2 mainUV_ScrollSpeed = new Vector2(0f, 0f);
 
-    [Header("====流光贴图的UV变化速度。====")]
+    [Header("====相乘贴图的UV变化速度。====")]
     public bool glossUV_FlowOnce = false;
     public Vector2 glossUV_FromTo = new Vector2(0f, 1f);
     public Vector2 glossUV_ScrollSpeed = new Vector2(0f, 0f);
