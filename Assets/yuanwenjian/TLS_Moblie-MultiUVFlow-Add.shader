@@ -1,4 +1,4 @@
-﻿Shader "TLStudio/Effect/Additive-MultiUVFlow"
+﻿Shader "TLStudio/Effect/MultiUVFlow-Add"
 {
 	Properties{
 		[Header(Tips begain)]
