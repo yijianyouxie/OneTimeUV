@@ -31,7 +31,7 @@ public class UVFlowController : VisiableUpdateHandler {
     public Vector2 adjustUV_FromTo = new Vector2(-1f, 0f);
     public Vector2 adjustUV_ScrollSpeed = new Vector2(0f, 0f);
 
-    [Header("====开始溶解的时间点。默认为-1，表示不进行溶解。")]
+    [Header("====曲线的x轴是时间轴。y轴是溶解值，最大为1。")]
     public AnimationCurve dissoveUV_Curve;
 
     // Use this for initialization
