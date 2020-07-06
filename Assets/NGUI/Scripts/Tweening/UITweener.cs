@@ -482,4 +482,11 @@ public abstract class UITweener : CacheBehaviour
 	/// </summary>
 
 	public virtual void SetEndToCurrentValue () { }
+
+    [ContextMenu("ResetAndPlay")]
+    public void ResetAndPlay()
+    {
+        ResetToBeginning();
+        PlayForward();
+    }
 }

@@ -5,6 +5,7 @@ public class UVFlowController : VisiableUpdateHandler {
 
     private Renderer render;
     private Material mat;
+
     //流逝的总时间
     private float elapseTime = 0f;
     [Header("====主贴图的UV的变化值。-1表示刚刚看到；0表示完全显示；1表示完全消失")]
@@ -12,24 +13,26 @@ public class UVFlowController : VisiableUpdateHandler {
     //public float _UVTo = 0f;
     //public float _duration = 1f;
     public bool mainUV_FlowOnce = true;
-    public Vector2 mainUV_FromTo = new Vector2(-1f, 0f);
-    [Header("曲线的x轴是时间轴，可以定义持续时间。y轴是百分比")]
+    //public Vector2 mainUV_FromTo = new Vector2(-1f, 0f);
+    [Header("曲线的x轴是时间轴，可以定义持续时间。y轴是UV中U值。")]
     public AnimationCurve mainUV_Curve;
     public Vector2 mainUV_ScrollSpeed = new Vector2(0f, 0f);
+    [Space(50)]
 
-    [Header("====相乘贴图的UV变化速度。====")]
-    public bool glossUV_FlowOnce = false;
+    private bool glossUV_FlowOnce = false;
+    [Header("====相乘贴图的UV变化速度。========")]
     public Vector2 glossUV_FromTo = new Vector2(0f, 1f);
     public Vector2 glossUV_ScrollSpeed = new Vector2(0f, 0f);
 
-    [Header("====相加贴图的UV变化速度。====")]
-    public bool adjustUV_FlowOnce = false;
+    
+    [Space(20)]
+    private bool adjustUV_FlowOnce = false;
+    [Header("====相加贴图的UV变化速度。========")]
     public Vector2 adjustUV_FromTo = new Vector2(-1f, 0f);
     public Vector2 adjustUV_ScrollSpeed = new Vector2(0f, 0f);
 
     [Header("====开始溶解的时间点。默认为-1，表示不进行溶解。")]
-    public float dissoveTime = -1f;
-    public float dissoveDuration = 1f;
+    public AnimationCurve dissoveUV_Curve;
 
     // Use this for initialization
     public override void Start()
@@ -57,10 +60,9 @@ public class UVFlowController : VisiableUpdateHandler {
         var offsetY = 0f;
 
         //主贴图=======================================
-        float ratio = mainUV_Curve.Evaluate(elapseTime);
         if (mainUV_FlowOnce)
         {
-            float currValue = Mathf.Lerp(mainUV_FromTo.x, mainUV_FromTo.y, ratio);
+            float currValue = mainUV_Curve.Evaluate(elapseTime);
             offsetX = (mainUV_ScrollSpeed.x != 0f ? currValue : 0f);
             offsetY = (mainUV_ScrollSpeed.y != 0f ? currValue : 0f);
         }
@@ -144,11 +146,8 @@ public class UVFlowController : VisiableUpdateHandler {
         mat.SetTextureOffset("_AdjustTex", new Vector2(offsetX, offsetY));
 
         //溶解
-        if(dissoveTime > 0 && elapseTime >= dissoveTime)
-        {
-            float delta = (elapseTime - dissoveTime) / dissoveDuration;
-            mat.SetFloat("_AlphaCutoff", delta);
-        }
+        float dissoveValue = dissoveUV_Curve.Evaluate(elapseTime);
+        mat.SetFloat("_AlphaCutoff", dissoveValue);
     }
 
     [ContextMenu("ResetAndPlay")]

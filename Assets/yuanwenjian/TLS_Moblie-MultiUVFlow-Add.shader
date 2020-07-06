@@ -4,16 +4,27 @@
 		[Header(Tips begain)]
 		[Header(Add UVFlowController Componet to use.)]
 		[Header(Tips end)]
-		[Space(20)]
+		[Header(bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb)]
 		_MainTex("MainTex", 2D) = "white" {}
-
+		_MainCol("_MainCol", Color) = (1,1,1,1)
+		
+		[Space(20)]
+		[Header(bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb)]
 		_GlossTex("相乘GlossTex", 2D) = "white" {}
+		_GlossCol("_GlossCol", Color) = (1,1,1,1)
 
+		[Space(20)]
+		[Header(bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb)]
 		_AdjustTex("相加AdjustTex", 2D) = "black" {}
+		_AdjustCol("_AdjustCol", Color) = (1,1,1,1)
 
+		[Space(20)]
 		[HideInInspector]_AlphaCutoff("Alpha cutoff", Range(0,1)) = 0
+		[Header(bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb)]
 		_DissoveTex("溶解DissoveTex", 2D) = "white" {}
 
+		[Space(20)]
+		[Header(bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb)]
 		_MaskTex("遮罩MaskTex", 2D) = "white" {}
 	}
 	SubShader{
@@ -39,6 +50,9 @@
 			#include "UnityCG.cginc"
 			#pragma target 3.0
 			uniform sampler2D _MainTex; uniform float4 _MainTex_ST;
+			fixed4 _MainCol;
+			fixed4 _GlossCol;
+			fixed4 _AdjustCol;
 			uniform sampler2D _GlossTex; uniform float4 _GlossTex_ST;
 			uniform sampler2D _AdjustTex; uniform float4 _AdjustTex_ST;
 			uniform sampler2D _MaskTex; uniform float4 _MaskTex_ST;
@@ -64,19 +78,19 @@
 			float4 frag(VertexOutput i) : COLOR{
 				//MainTex
 				float4 _MainTex_var = tex2D(_MainTex, TRANSFORM_TEX(i.uv0, _MainTex));
-				float3 emissive = (_MainTex_var.rgb*i.vertexColor.rgb);
+				float3 emissive = (_MainTex_var.rgb*i.vertexColor.rgb*_MainCol.rgb);
 				float3 finalColor = emissive;
-				fixed finalAlpha = _MainTex_var.a;
+				fixed finalAlpha = _MainTex_var.a * _MainCol.a;
 
 				//_GlossTex
 				float4 _GlossTex_var = tex2D(_GlossTex, TRANSFORM_TEX(i.uv0, _GlossTex));
-				float3 glossFinalCol = _GlossTex_var.a*_GlossTex_var.rgb;
+				float3 glossFinalCol = _GlossTex_var.rgb * _GlossTex_var.a * _GlossCol.rgb * _GlossCol.a;
 				finalColor *= glossFinalCol;
 				//finalAlpha = (finalAlpha + (1 - finalAlpha)*_GlossTex_var.a);
 
 				//_AdjustTex
 				float4 _AdjustTex_var = tex2D(_AdjustTex, TRANSFORM_TEX(i.uv0, _AdjustTex));
-				float3 finalAdjustCol = _AdjustTex_var.rgb*_AdjustTex_var.a;
+				float3 finalAdjustCol = _AdjustTex_var.rgb*_AdjustTex_var.a * _AdjustCol.rgb * _AdjustCol.a;
 				finalColor += finalAdjustCol;
 				//finalAlpha = (finalAlpha + (1 - finalAlpha)*_AdjustTex_var.a);
 
@@ -86,7 +100,8 @@
 
 				//_DissoveTex
 				float4 _DissoveTex_var = tex2D(_DissoveTex, TRANSFORM_TEX(i.uv0, _DissoveTex));
-				clip(_DissoveTex_var.a - _AlphaCutoff);
+				//溶解使用r通道
+				clip(_DissoveTex_var.r - _AlphaCutoff);
 
 				return fixed4(finalColor.rgb, finalAlpha);
 			}
