@@ -82,7 +82,7 @@
 				float4 _MainTex_var = tex2D(_MainTex, TRANSFORM_TEX(i.uv0, _MainTex));
 				float3 emissive = (_MainTex_var.rgb*i.vertexColor.rgb*_MainCol.rgb);
 				float3 finalColor = emissive * _MainColIntensity;
-				fixed finalAlpha = _MainTex_var.a * _MainCol.a;
+				fixed finalAlpha = _MainTex_var.a * _MainCol.a * i.vertexColor.a;
 
 				//_GlossTex
 				float4 _GlossTex_var = tex2D(_GlossTex, TRANSFORM_TEX(i.uv0, _GlossTex));

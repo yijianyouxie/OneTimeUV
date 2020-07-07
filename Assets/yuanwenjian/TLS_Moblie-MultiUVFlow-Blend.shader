@@ -5,7 +5,7 @@
 		[Header(Add UVFlowController Componet to use.)]
 		[Header(Tips end)]
 		[Header(bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb)]
-		_MainTex("MainTex", 2D) = "white" {}
+		_MainTex("MainTex", 2D) = "black" {}
 		_MainCol("_MainCol", Color) = (1,1,1,1)
 		_MainColIntensity("MainColIntensity", Range(0, 5)) = 1
 		
@@ -82,11 +82,11 @@
 				float4 _MainTex_var = tex2D(_MainTex, TRANSFORM_TEX(i.uv0, _MainTex));
 				float3 emissive = (_MainTex_var.rgb*i.vertexColor.rgb*_MainCol.rgb);
 				float3 finalColor = emissive * _MainColIntensity;
-				fixed finalAlpha = _MainTex_var.a * _MainCol.a;
+				fixed finalAlpha = _MainTex_var.a * _MainCol.a * i.vertexColor.a;
 
 				//_GlossTex
 				float4 _GlossTex_var = tex2D(_GlossTex, TRANSFORM_TEX(i.uv0, _GlossTex));
-				float3 glossFinalCol = _GlossTex_var.rgb * _GlossTex_var.a * _GlossCol.rgb * _GlossCol.a;
+				float3 glossFinalCol = _GlossTex_var.rgb * _GlossCol.rgb * _GlossCol.a;
 				finalColor *= glossFinalCol;
 				//finalAlpha = (finalAlpha + (1 - finalAlpha)*_GlossTex_var.a);
 
