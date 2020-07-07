@@ -7,6 +7,7 @@
 		[Header(bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb)]
 		_MainTex("MainTex", 2D) = "white" {}
 		_MainCol("_MainCol", Color) = (1,1,1,1)
+		_MainColIntensity("MainColIntensity", Range(0, 5)) = 1
 		
 		[Space(20)]
 		[Header(bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb)]
@@ -51,6 +52,7 @@
 			#pragma target 3.0
 			uniform sampler2D _MainTex; uniform float4 _MainTex_ST;
 			fixed4 _MainCol;
+			float _MainColIntensity;
 			fixed4 _GlossCol;
 			fixed4 _AdjustCol;
 			uniform sampler2D _GlossTex; uniform float4 _GlossTex_ST;
@@ -79,7 +81,7 @@
 				//MainTex
 				float4 _MainTex_var = tex2D(_MainTex, TRANSFORM_TEX(i.uv0, _MainTex));
 				float3 emissive = (_MainTex_var.rgb*i.vertexColor.rgb*_MainCol.rgb);
-				float3 finalColor = emissive;
+				float3 finalColor = emissive * _MainColIntensity;
 				fixed finalAlpha = _MainTex_var.a * _MainCol.a;
 
 				//_GlossTex

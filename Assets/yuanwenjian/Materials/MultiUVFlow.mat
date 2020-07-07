@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: MultiUVFlow
-  m_Shader: {fileID: 4800000, guid: 2cb2533abf3ccd3448bc795a4c615096, type: 3}
+  m_Shader: {fileID: 4800000, guid: 5b747fa477b13fa43b08a6c41a149c74, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -159,6 +159,10 @@ Material:
         first:
           name: _AlphaCutoff
         second: 0
+      data:
+        first:
+          name: _MainColIntensity
+        second: 1
     m_Colors:
       data:
         first:
@@ -167,4 +171,16 @@ Material:
       data:
         first:
           name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _MainCol
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _GlossCol
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _AdjustCol
         second: {r: 1, g: 1, b: 1, a: 1}

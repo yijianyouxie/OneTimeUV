@@ -34,6 +34,8 @@ public class UVFlowController : VisiableUpdateHandler {
     [Header("====曲线的x轴是时间轴。y轴是溶解值，最大为1。")]
     public AnimationCurve dissoveUV_Curve;
 
+
+    private bool reseted = false;
     // Use this for initialization
     public override void Start()
     {
@@ -52,6 +54,11 @@ public class UVFlowController : VisiableUpdateHandler {
     { 
         if (render == null || mat == null)
         {
+            return;
+        }
+        if(reseted)
+        {
+            reseted = false;
             return;
         }
         //时间流逝
@@ -153,11 +160,13 @@ public class UVFlowController : VisiableUpdateHandler {
     [ContextMenu("ResetAndPlay")]
     public void ResetAndPlay()
     {
+        reseted = true;
         elapseTime = 0f;
         if (render == null || mat == null)
         {
             return;
         }
+        mat.mainTextureOffset = new Vector2(-1f, 0f);
         mat.SetFloat("_AlphaCutoff", 0f);
     }
 }
